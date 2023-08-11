@@ -1,0 +1,122 @@
+{% extends "homepage/base.html"%}
+{% block Mcontent%}
+<div class="container">
+		<style>
+
+		.user_card {
+			width: 350px;
+			margin-top: auto;
+			margin-bottom: auto;
+			background: #74cfbf;
+			position: relative;
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+			padding: 10px;
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			border-radius: 5px;
+
+		}
+
+		.form_container {
+			margin-top: 20px;
+		}
+
+		#form-title{
+			color: #fff;
+		}
+		.login_btn {
+			width: 100%;
+			background: #33ccff !important;
+			color: white !important;
+		}
+		.login_btn:focus {
+			box-shadow: none !important;
+			outline: 0px !important;
+		}
+		.login_container {
+			padding: 0 2rem;
+		}
+		.input-group-text {
+			background: #f7ba5b !important;
+			color: white !important;
+			border: 0 !important;
+			border-radius: 0.25rem 0 0 0.25rem !important;
+		}
+		.input_user,
+		.input_pass:focus {
+			box-shadow: none !important;
+			outline: 0px !important;
+		}
+	</style>
+	  <div class="container">
+		<div class="row justify-content-center mt-5">
+		  <div class="col-lg-4 col-md-6 col-sm-6">
+			<div class="card shadow">
+			  <div class="card-title text-center border-bottom">
+				<h2 class="p-3">Sign up</h2>
+			  </div>
+			  <form method="POST" action="">
+			  <div class="card-body">
+				  <div class="mb-2">
+					{% csrf_token %}
+					<label for="username" class="form-label">Username</label>
+					{{ form.username}}
+				  </div>
+				  <div class="mb-2">
+					<label for="password" class="form-label">Email</label>
+					{{ form.email}}	
+				  </div>
+				  <div class="mb-2">
+					<label for="password" class="form-label">Password</label>
+					{{ form.password1}}	
+				  </div>
+	   
+				  <div class="mb-2">
+					<label for="password" class="form-label">Re-enter password</label>
+					{{ form.password2}}	
+				  </div>
+	   
+	   
+
+			  {{form.errors}}
+			  <div class="mt-1">
+				<div class="d-flex justify-content-center links">
+					Already have an account?&nbsp<a href=" {% url 'loginUser' %}" class="ml-2"> Login</a>
+				</div>
+			</div>
+				  <div class="d-grid">
+					<button type="submit" value="Login" style="background-color: #4c925d; margin-top: 10px;" class="btn text-light main-bg">Login</button>
+				  </div>
+				  
+				</form>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	
+				
+
+				
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+
+		var form_fields = document.getElementsByTagName('input')
+
+
+
+		for (var field in form_fields){	
+			form_fields[field].className += ' form-control'
+		}
+	</script>
+</div>
+
+{%endblock%}

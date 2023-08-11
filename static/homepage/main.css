@@ -1,0 +1,508 @@
+@font-face {
+    font-family: "thinandlight";
+    src: url("static/homepage/RobotoSlab-VariableFont_wght.ttf") format("truetype");
+}
+
+* {
+    margin: 0;
+    outline: 0;
+    border-color: black;
+}
+
+.container {
+    margin-top: 60px;
+}
+
+#upperthird {
+    z-index: +2;
+    position: fixed;
+    width: 100%;
+    height: 110px;
+    top: 0;
+}
+
+#header {
+    background-color: #4c925d;
+}
+
+#tabcon {
+    display: flex;
+    list-style: none;
+    height: 100%;
+    padding: 0;
+    float: left;
+    width: calc(96vh - (100vh - 100%));
+}
+
+#newtab {
+    position: relative;
+    width: 100%;
+    padding: 0;
+    height: 100%;
+    animation-name: newtab;
+    animation-duration: 0.25s;
+}
+
+@keyframes newtab {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+#closetab {
+    position: relative;
+    width: 100%;
+
+    padding: 0;
+    height: 100%;
+    animation-name: closetab;
+    animation-duration: 0.25s;    
+    animation-fill-mode: forwards;
+}
+@keyframes closetab {
+    0% {
+        width: 100%;
+    }
+    100% {
+        width: 0;
+    }
+}
+
+
+
+
+#size {
+    height: 4vh;
+    width: calc(100vw - (100vw - 100%));
+}
+#addbut:hover{
+    background-color: rgb(230, 230, 230);
+
+}
+
+#addbut {
+    border: 0;
+    text-align: center;
+    width: 4vh;
+    height: 4vh;
+    border-width: 1px;
+    border-style: solid;
+    float: right;
+    position: absolute;
+    background-color: white;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#adcon {
+    width: 100%;
+    height: 100%;
+}
+
+#plusButton {
+    position: relative;
+    float: right;
+    width: 4vh;
+    height: 100%;
+    border-width:1px ;
+}
+
+#flexxcontainer {
+    height: 70px;
+    width: 100%;
+}
+
+#nav {
+    position: relative;
+    float: right;
+    width: 65%;
+    padding-left: 25%;
+    padding-right: 15%;
+    height: 70px;
+    justify-content: center;
+}
+
+#accountCon {
+    margin-left: 5px;
+    float: right;
+    width: fit-content;
+    top: 50%;
+    transform: translateY(-50%);
+    position: relative;
+}
+
+#helloMessageCon {
+    float: right;
+    width: fit-content;
+    top: 50%;
+    transform: translateY(-50%);
+    position: relative;
+}
+
+#helloMessage {
+    font-size: x-large;
+    top: 50%;
+    transform: translateY(-50%);
+    position: relative;
+    color: inherit;
+}
+
+#hawkey {
+    margin-left: 14%;
+    width: 21%;
+    height: 100%;
+    float: left;
+}
+
+#hawkeyText {
+    float: left;
+    width: fit-content;
+}
+
+#hawkeyLogo {
+    float: left;
+    height: 100%;
+    width: 70px;
+}
+
+#hawkeyLogoImage {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+#home {
+    font-size: 47px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    color: inherit;
+}
+
+body {
+    background-color: #fcfcfc;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+}
+
+#tabcontent>div.page>header>a {
+    text-decoration: none;
+    color: inherit;
+}
+
+#title {
+    float: left;
+    font-size: larger;
+    text-align: justify;
+    padding: 0;
+}
+
+.tab {
+    position: relative;
+    width: 100%;
+    padding: 0;
+    height: 100%;
+    white-space: nowrap;
+    overflow: ellipsis;
+}
+
+.tabs {
+    background-color: white;
+    border-width: 1px;
+    margin-left: 0.125em;
+    flex: 1;
+    line-height: 25px;
+    margin-left: 0%;
+    width: 100%;
+    height: 100%;
+    border-right: 0;
+    position: absolute;
+    padding-right: 40px;
+    padding-left: 3%;
+    font-size: 20px;
+    font-family: "Lato";
+}
+
+.tabs:hover~.closeTab {
+    background-color: rgb(230, 230, 230);
+}
+
+
+.tabs:hover {
+    background-color: rgb(230, 230, 230);
+}
+
+.closeTab:hover~.tabs {
+    background-color: rgb(230, 230, 230);
+}
+
+.closeTab:hover {
+    background-color: rgb(230, 230, 230);
+}
+
+.loginLogout {
+    width: 48%;
+    height: 40px;
+    border-color: #b1b1b1;
+    border-style: solid;
+    border-radius: 25px;
+    border-width: 1px;
+    background-color: white;
+    top: 50%;
+    transform: translateY(-50%);
+    position: relative;
+}
+
+.closeTab {
+    top: 50%;
+    position: absolute;
+    height: 3.82vh;
+    width: 3.82vh;
+    right: 0;
+    background-color: white;
+    border-width: 0;
+    text-align: center;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    font-size: 15px;
+    color: black;
+}
+
+.error {
+    display: none;
+    color: red;
+    text-align: center;
+    margin-top: 25px;
+    font-size: larger;
+}
+
+#loginError {
+    display: none;
+    text-align: center;
+}
+
+#accountChange {
+    text-align: center;
+    color: rgb(7, 161, 7);
+}
+
+#itemcont {
+    background-color: #ffffff;
+    border-bottom-left-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+}
+
+.myForm {
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+}
+
+.h1 {
+    font-size: 20px;
+    display: table-cell;
+    overflow: hidden;
+    vertical-align: middle;
+    position: fixed;
+}
+
+#containFORM {
+    margin-top: 7%;
+    z-index: +1;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+#classANDInfo {
+    width: 100%;
+    height: 17.8vw;
+}
+
+.infoContainer {
+    max-width: 100%;
+    max-height: 100%;
+    margin-left: 5.2%;
+    width: 64.8%;
+    height: 500px;
+    float: right;
+    text-overflow: ellipsis;
+    overflow: auto;
+    border: 0.5px;
+    border-color: #b1b1b1;
+    border-style: solid;
+    border-radius: 5px;
+}
+
+.containerX {
+    position: relative;
+    margin-top: 110px;
+    padding-top: 1px;
+    width: 100%;
+    height: 1500px;
+}
+
+#tabcontent {
+    width: 62%;
+    margin: 0 auto;
+    height: 100%;
+}
+
+.main {
+    width: 100%;
+    float: left;
+    margin-top: 30px;
+}
+
+#sendReminder {
+    color: white;
+    height: 100%;
+    background-color: #4c925d;
+    opacity: 100%;
+    border-width: 1px;
+    width: 100%;
+    font-weight: 600;
+}
+
+#textINFO2 {
+    height: 100%;
+    width: 50%;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 15% 100%);
+    background-color: auto;
+    float: right;
+    background-color: white;
+}
+
+p {
+    margin: 0;
+}
+
+#featured {
+    width: 95%;
+    height: 95%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    background-color: white;
+    border: #4c925d;
+    border-width: 2px;
+    border-style: solid;
+    padding: 10px;
+}
+
+.mySlides {
+    width: 100%;
+    max-height: 100%;
+}
+
+#featuredCONTAINER {
+    width: 50%;
+    height: 20%;
+    position: absolute;
+    right: 6%;
+    margin-top: 5%;
+}
+
+.slides {
+    width: 10px;
+    background-color: gray;
+    height: 10px;
+    border-radius: 50%;
+    margin-top: 7px;
+}
+
+#slidesCON {
+    width: fit-content;
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: rotate(270deg);
+    margin-right: 10px;
+}
+
+#prodcon::-webkit-scrollbar {
+    width: 7px;
+}
+
+
+
+#prodcon::-webkit-scrollbar-thumb {
+    background: #888;
+    height: 100px;
+    border-radius: 50px;
+}
+
+.infoContainer::-webkit-scrollbar-thumb {
+    background: #888;
+    height: 100px;
+    border-radius: 50px;
+}
+
+.infoContainer::-webkit-scrollbar {
+    width: 7px;
+}
+
+
+.loading {
+    width: fit-content;
+    height: 10px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+li {
+    list-style: none;
+    height: 100%;
+}
+
+.modal-footer {
+    justify-content: center;
+}
+
+.modal-backdrop {
+    z-index: 0;
+}
+
+#upperthird>div>div>div>div>ul>li>ul {
+    padding: 0;
+    padding-right: 40px;
+    text-align: center;
+}
+
+#upperthird>div>div>div>div>ul>li>ul>li {
+    color: red;
+}
+
+#upperthird>div>div.container>div.row.gutters-sm {
+    margin-top: -50px;
+}
+
+#priceDeltaColour {
+    display: inline-block;
+}
+
+#priceDeltaColour>img {
+    width: 19px;
+    height: 19px;
+}
+
+.container {
+    z-index: -2;
+}
+
+#upperthird>div>div>div>div>div.mt-4>div:nth-child(1)>a {
+    color: #f7ba5b;
+}
+
+#upperthird>div>div>div>div>div.mt-4>div:nth-child(2)>a {
+    color: #f7ba5b;
+}
+
+.login_btn {
+    background-color: #f7ba5b !important;
+}

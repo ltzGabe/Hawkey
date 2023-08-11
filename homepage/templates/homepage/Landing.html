@@ -1,0 +1,215 @@
+
+{% extends "homepage/base.html"%} {%load static%} 
+{% block Tabs %}
+<div id="size">
+   <div id="tabcon" style="width:100%;">
+   </div>
+
+
+</div>
+</div>
+
+{%endblock%} 
+{% block Mcontent%}
+<style>
+  #defaultCol {
+    height: 1100px;
+    margin-top: 110px;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+}
+
+#white {
+    height: 1100px;
+    padding: 0;
+    width: 100%;
+}
+
+.info {
+    height: 50%;
+}
+
+#textINFO1 {
+    height: 100%;
+    width: 50%;
+    clip-path: polygon(0 0, 85% 0, 100% 100%, 0 100%);
+    float: left;
+    background-color: white;
+}
+  #all {
+    background-color: #4c925d;
+    top: 0;
+    position: absolute;
+    width: 100%;
+  }
+
+  #hello {
+    position: absolute;
+    margin-left: 17%;
+    margin-top: 2%;
+    height: fit-content;
+    width: fit-content;
+  }
+
+  #Hawkeys {
+    height: fit-content;
+    font-size: 100px;
+  }
+
+  #Weclome {
+    position: absolute;
+    font-size: xx-large;
+    height: 15px;
+    vertical-align: text-bottom;
+  }
+
+</style>
+{% csrf_token %}
+		{% if messages %} 
+			{% for message in messages %}		
+				<script>
+					$(document).ready(function () {
+					$("#signin").modal("show");
+					});
+				</script> 
+					<div class="modal fade" id="signin" role="dialog">
+						<div class="modal-dialog">
+							<div class="card">
+								<div class="text-right cross"> <i class="fa fa-times"></i> </div>
+								<div class="card-body text-center"> <img src="https://img.icons8.com/bubbles/200/000000/trophy.png">
+									<h4>CONGRATULATIONS!</h4>
+									<p>You have been personally selected to take part in our 2017 annual visitors survey!</p> <button class="btn btn-out btn-square continue">CONTINUE</button>
+								</div>
+							</div>
+						</div>
+					</div>
+ 
+			{% endfor %} 
+		{% endif %} 
+<div id="all">
+    <div id="defaultCol">
+        <div id="hello">
+            <div id="Weclome"><p>Welcome to</p></div>
+            <div id="Hawkeys"><p>Hawkey</p></div>
+        </div>
+<div id="featuredCONTAINER">
+            <div id="featured">
+                <div class="mySlides" style="display: none;"><iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&amp;OneJS=1&amp;Operation=GetAdHtml&amp;MarketPlace=GB&amp;source=ac&amp;ref=tf_til&amp;ad_type=product_link&amp;tracking_id=hawkeyo-21&amp;marketplace=amazon&amp;region=GB&amp;placement=B00DEQUB0Q&amp;asins=B00DEQUB0Q&amp;linkId=51ec1e883c8952675ec787d49055a769&amp;show_border=false&amp;link_opens_in_new_window=false&amp;price_color=333333&amp;title_color=0066c0&amp;bg_color=ffffff"></iframe></div>
+                <img class="mySlides" src="https://www.w3schools.com/w3css/img_lights.jpg" style="display: none;">
+                <img class="mySlides" src="https://www.w3schools.com/w3css/img_mountains.jpg" style="display: none;">
+                <img class="mySlides" src="https://www.w3schools.com/w3css/img_forest.jpg" style="display: block;">
+            </div>
+            <div id="slidesCON">
+            </div>
+ 
+        </div>
+    
+    </div>
+    <div id="white">
+    <div id="middle"> </div>
+        <div id="info1" class="info">
+            <div id="textINFO1"><div id="filler1"></div></div>
+        </div>
+       <div id="info2" class="info">
+            <div id="textINFO2"><div id="filler2"></div></div>  
+        </div>
+
+    </div>
+</div>
+<script>
+  array = $('.mySlides').length
+  for (let index = 0; index < array; index++) {
+    slideHolder = document.createElement("div")
+    slideShower = document.createElement("div")
+    slideShower.className = "slides"
+    document.getElementById("slidesCON").insertAdjacentElement("beforeend", slideShower)
+  
+  }
+
+    setInterval(myMethod, 5000);
+  
+    function myMethod() {
+      plusDivs(+1)
+    }
+    slideIndex = 1;
+    showDivs(slideIndex);
+  
+    function plusDivs(n) {
+      showDivs(slideIndex += n);
+    }
+  
+    function showDivs(n) {
+      var i;
+      x = document.getElementsByClassName("mySlides");
+      if (n > x.length) {
+        slideIndex = 1
+      }
+      if (n < 1) {
+        slideIndex = x.length
+      }
+      for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+      }
+      x[slideIndex - 1].style.display = "block";
+  
+      array = $('.mySlides').length
+      for (let i = 0; i < array; i++) {
+        if (document.getElementsByClassName("slides")[i] != document.getElementsByClassName("slides")[slideIndex - 1]) {
+          document.getElementsByClassName("slides")[i].style.backgroundColor = "white"
+        } else {
+          document.getElementsByClassName("slides")[i].style.backgroundColor = "grey"
+        }
+      }
+    }
+  
+</script>
+<script>
+if (loginState == "True") {
+  for (var y = openTabs - 1; y >= 0; y--) {
+    aTab = document.createElement("button")
+    tab = document.createElement("div")
+    closeButton = document.createElement("button")
+    closeButton.className = "closeTab"
+    closeButton.innerHTML = "✖"
+    tab.className = "tab"
+    aTab.className = "tabs"
+    tab.appendChild(aTab)
+    tab.appendChild(closeButton)
+    if (name[y] == "") {
+      aTab.setAttribute("onclick", "window.location='http://127.0.0.1:8000/products" + "/" + (y) + "'")
+    } else {
+      aTab.setAttribute("onclick", "window.location='http://127.0.0.1:8000/products" + "/" + (y) + "/" + name[y] + "'")
+    }
+    document.getElementById("tabcon").insertAdjacentElement("afterbegin", tab)
+
+    aTab.innerHTML = name[y]
+  }
+  if (currentTab != "None") {
+    document.getElementsByClassName("tabs")[currentTab].style.backgroundColor = "#CBCBCB"
+  }
+} else {
+  for (var y = openTabs - 1; y >= 0; y--) {
+    aTab = document.createElement("button")
+    tab = document.createElement("div")
+
+    tab.className = "tab"
+    aTab.className = "tabs"
+    tab.appendChild(aTab)
+    document.getElementById("plusButton").style.display = "none"
+    document.getElementById("tabcon").style.width = "100%"
+    if (name[y] == "") {
+      aTab.setAttribute("onclick", "window.location='http://127.0.0.1:8000/products" + "/" + (y) + "'")
+    } else {
+      aTab.setAttribute("onclick", "window.location='http://127.0.0.1:8000/products" + "/" + (y) + "/" + name[y] + "'")
+    }
+    document.getElementById("tabcon").insertAdjacentElement("afterbegin", tab)
+    aTab.innerHTML = name[y]
+  }
+  if (currentTab != "None") {
+    document.getElementsByClassName("tabs")[currentTab].style.backgroundColor = "#CBCBCB"
+  }
+}
+</script>
+{%endblock%}
+          
+          

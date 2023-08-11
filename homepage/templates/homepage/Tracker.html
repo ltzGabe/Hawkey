@@ -1,0 +1,408 @@
+{% extends "homepage/base.html"%} {%load static%} {% block Tabs %}
+<div id="size">
+   <div id="tabcon">
+   </div>
+   <div id="plusButton">
+      <div id="adcon">
+         <button id="addbut" name="newtab"></button>
+      </div>
+   </div>
+
+</div>
+</div>
+{%endblock%} 
+{% block Mcontent%}
+<style>
+  .dot-pulse::before,
+.dot-pulse::after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    width: 10px;
+    height: 10px;
+    bcurrentTab-radius: 5px;
+    background-color: #000000;
+    color: #000000;
+}
+
+.dot-pulse::before {
+    box-shadow: 9984px 0 0 -5px #000000;
+    animation: dotPulseBefore 1.5s infinite linear;
+    animation-delay: 0s;
+}
+
+.dot-pulse::after {
+    box-shadow: 10014px 0 0 -5px #000000;
+    animation: dotPulseAfter 1.5s infinite linear;
+    animation-delay: .5s;
+}
+
+@keyframes dotPulseBefore {
+    0% {
+        box-shadow: 9984px 0 0 -5px #000000;
+    }
+    30% {
+        box-shadow: 9984px 0 0 2px #000000;
+    }
+    60%,
+    100% {
+        box-shadow: 9984px 0 0 -5px #000000;
+    }
+}
+
+@keyframes dotPulse {
+    0% {
+        box-shadow: 9999px 0 0 -5px #000000;
+    }
+    30% {
+        box-shadow: 9999px 0 0 2px #000000;
+    }
+    60%,
+    100% {
+        box-shadow: 9999px 0 0 -5px #000000;
+    }
+}
+
+@keyframes dotPulseAfter {
+    0% {
+        box-shadow: 10014px 0 0 -5px #000000;
+    }
+    30% {
+        box-shadow: 10014px 0 0 2px #000000;
+    }
+    60%,
+    100% {
+        box-shadow: 10014px 0 0 -5px #000000;
+    }
+}
+.dot-pulse {
+  position: relative;
+  left: -9999px;
+  width: 10px;
+  height: 10px;
+  bcurrentTab-radius: 5px;
+  background-color: #000000;
+  color: #000000;
+  box-shadow: 9999px 0 0 -5px #000000;
+  animation: dotPulse 1.5s infinite linear;
+  animation-delay: .25s;
+}
+
+.myTextInputID::-webkit-input-placeholder {
+  color: transparent;
+  font-size: 20px;
+}
+
+.myTextInputID::-moz-placeholder {
+    color: transparent;
+    font-size: 20px;
+}
+
+.myTextInputID:-ms-input-placeholder {
+    color: transparent;
+    font-size: 20px;
+}
+
+.myTextInputID::placeholder {
+    color: transparent;
+    font-size: 20px;
+}
+
+.myTextInputID {
+    width: 100%;
+    bcurrentTab-radius: 5px;
+    height: 3em;
+    bcurrentTab-color: black;
+    margin: 0;
+}
+
+.myTextInputID::placeholder {
+    background-color: #fcfcfc;
+    color: rgb(203, 203, 203);
+}
+
+/*
+.myTextInputID:hover::placeholder {
+    color: black;
+    font-size: 20px;
+}
+*/
+#prodcon {
+  height: 350px;
+  width: 100%;
+  background-color: #0ec6e2;
+  overflow: scroll;
+  overflow-x: hidden;
+  display: none;
+  resize: vertical;
+  bcurrentTab-bottom-right-radius: 15px;
+  bcurrentTab-bottom-left-radius: 15px;
+  bcurrentTab-bottom: solid;
+  bcurrentTab-left: solid;
+  bcurrentTab-right: solid;
+  bcurrentTab-width: 1px;
+}
+.rows {
+    height: 150px;
+    width: 100%;
+    bcurrentTab-bottom-style: solid;
+    bcurrentTab-width: 1px;
+}
+
+.imagecontainer {
+    width: 22%;
+    height: 100%;
+    float: left;
+    background-color: transparent;
+    position: relative;
+    bcurrentTab-width: 1px;
+    bcurrentTab-right-style: solid;
+    background-color: white;
+}
+
+.titlecontainer {
+    float: right;
+    height: 100%;
+    background-color: #eeeeee;
+    width: 78%;
+    font-family: amazon;
+    position: relative;
+    overflow: hidden;
+}
+
+.titlecontainerTEXT {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: x-large;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: relative;
+}
+
+.smallImage {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+</style>
+<div class="containerX">
+   <p class="error" id="error2">&nbsp;&nbsp;&nbsp; You can't track this many products at once. Delete some tabs and try again.</p>
+   <p class="error" id="error3">You need to be tracking at least one product.</p>
+   <div id="tabcontent">
+    <div id="containFORM">
+      <form class="amazonURL" data-bs-toggle="tooltip"  data-bs-placement="top" title="Enter Amazon URL or keywords to search for products" data-bs-animation="true" data-bs-delay="5000" id="productInput" method="post" name="productInput" onsubmit="return false">
+        
+        {% csrf_token %}<input type="text" name="productURL" class="myTextInputID"  required="" id="id_productURL">
+      </form>
+      <style>
+      .tooltip-inner
+      {
+          background-color: grey;
+          max-width:500px;
+          width: 380px;
+          padding:4px;
+      }
+
+      </style>
+
+      <p class="error" id="error1">Enter an Amazon URL or an Amazon product keyword</p>
+      <div id="prodcon">
+        <div class="rows">
+          <div class="imagecontainer">
+            <div class="loading">
+              <div class="dot-pulse"></div>
+            </div>
+            <img class="smallImage">
+          </div>
+          <div class="titlecontainer">
+            <div class="titlecontainerTEXT"></div>
+            <div class="loading">
+              <div class="dot-pulse"></div>
+            </div>
+          </div>
+        </div>
+        <div class="rows">
+          <div class="imagecontainer">
+            <div class="loading">
+              <div class="dot-pulse"></div>
+            </div>
+            <img class="smallImage">
+          </div>
+          <div class="titlecontainer">
+            <div class="titlecontainerTEXT"></div>
+            <div class="loading">
+              <div class="dot-pulse"></div>
+            </div>
+          </div>
+        </div>
+        <div class="rows">
+          <div class="imagecontainer">
+            <div class="loading">
+              <div class="dot-pulse"></div>
+            </div>
+            <img class="smallImage">
+          </div>
+          <div class="titlecontainer">
+            <div class="titlecontainerTEXT"></div>
+            <div class="loading">
+              <div class="dot-pulse"></div>
+            </div>
+          </div>
+        </div>
+        <div class="rows">
+          <div class="imagecontainer">
+            <div class="loading">
+              <div class="dot-pulse"></div>
+            </div>
+            <img class="smallImage">
+          </div>
+          <div class="titlecontainer">
+            <div class="titlecontainerTEXT"></div>
+            <div class="loading">
+              <div class="dot-pulse"></div>
+            </div>
+          </div>
+        </div>
+        <div class="rows">
+          <div class="imagecontainer">
+            <div class="loading">
+              <div class="dot-pulse"></div>
+            </div>
+            <img class="smallImage">
+          </div>
+          <div class="titlecontainer">
+            <div class="titlecontainerTEXT"></div>
+            <div class="loading">
+              <div class="dot-pulse"></div>
+            </div>
+          </div>
+        </div>
+        <div class="rows">
+          <div class="imagecontainer">
+            <div class="loading">
+              <div class="dot-pulse"></div>
+            </div>
+            <img class="smallImage">
+          </div>
+          <div class="titlecontainer">
+            <div class="titlecontainerTEXT"></div>
+            <div class="loading">
+              <div class="dot-pulse"></div>
+            </div>
+          </div>
+        </div>
+        <div class="rows">
+          <div class="imagecontainer">
+            <div class="loading">
+              <div class="dot-pulse"></div>
+            </div>
+            <img class="smallImage">
+          </div>
+          <div class="titlecontainer">
+            <div class="titlecontainerTEXT"></div>
+            <div class="loading">
+              <div class="dot-pulse"></div>
+            </div>
+          </div>
+        </div>
+        <div class="rows">
+          <div class="imagecontainer">
+            <div class="loading">
+              <div class="dot-pulse"></div>
+            </div>
+            <img class="smallImage">
+          </div>
+          <div class="titlecontainer">
+            <div class="titlecontainerTEXT"></div>
+            <div class="loading">
+              <div class="dot-pulse"></div>
+            </div>
+          </div>
+        </div>
+        <div class="rows">
+          <div class="imagecontainer">
+            <div class="loading">
+              <div class="dot-pulse"></div>
+            </div>
+            <img class="smallImage">
+          </div>
+          <div class="titlecontainer">
+            <div class="titlecontainerTEXT"></div>
+            <div class="loading">
+              <div class="dot-pulse"></div>
+            </div>
+          </div>
+        </div>
+        <div class="rows">
+          <div class="imagecontainer">
+            <div class="loading">
+              <div class="dot-pulse"></div>
+            </div>
+            <img class="smallImage">
+          </div>
+          <div class="titlecontainer">
+            <div class="titlecontainerTEXT"></div>
+            <div class="loading">
+              <div class="dot-pulse"></div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+</div></div>
+
+<script>if (loginState == "True") {
+  for (var y = openTabs - 1; y >= 0; y--) {
+    aTab = document.createElement("button")
+    tab = document.createElement("div")
+    closeButton = document.createElement("button")
+    closeButton.className = "closeTab"
+    closeButton.innerHTML = "✖"
+    tab.className = "tab"
+    aTab.className = "tabs"
+    tab.appendChild(aTab)
+    tab.appendChild(closeButton)
+    if (name[y] == "") {
+      aTab.setAttribute("onclick", "window.location='http://127.0.0.1:8000/products" + "/" + (y) + "'")
+    } else {
+      aTab.setAttribute("onclick", "window.location='http://127.0.0.1:8000/products" + "/" + (y) + "/" + name[y] + "'")
+    }
+    document.getElementById("tabcon").insertAdjacentElement("afterbegin", tab)
+
+    aTab.innerHTML = name[y]
+  }
+  if (currentTab != "None") {
+    document.getElementsByClassName("tabs")[currentTab].style.backgroundColor = "#CBCBCB"
+    document.getElementsByClassName("closeTab")[currentTab].style.backgroundColor = "#CBCBCB"
+  }
+} else {
+  for (var y = openTabs - 1; y >= 0; y--) {
+    aTab = document.createElement("button")
+    tab = document.createElement("div")
+
+    tab.className = "tab"
+    aTab.className = "tabs"
+    tab.appendChild(aTab)
+    document.getElementById("plusButton").style.display = "none"
+    document.getElementById("tabcon").style.width = "100%"
+    if (name[y] == "") {
+      aTab.setAttribute("onclick", "window.location='http://127.0.0.1:8000/products" + "/" + (y) + "'")
+    } else {
+      aTab.setAttribute("onclick", "window.location='http://127.0.0.1:8000/products" + "/" + (y) + "/" + name[y] + "'")
+    }
+    document.getElementById("tabcon").insertAdjacentElement("afterbegin", tab)
+    aTab.innerHTML = name[y]
+  }
+  if (currentTab != "None") {
+    document.getElementsByClassName("tabs")[currentTab].style.backgroundColor = "#CBCBCB"
+    document.getElementsByClassName("closeTab")[currentTab].style.backgroundColor = "#CBCBCB"
+  }
+}
+</script>
+
+{%endblock%}

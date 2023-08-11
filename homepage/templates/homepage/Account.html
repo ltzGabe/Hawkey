@@ -1,0 +1,392 @@
+{% extends "homepage/base.html"%} {% block Tabs %} {% load countries %} {%endblock%} {% block Mcontent%}
+<div class="container">
+	<h1> Hello, <span>{{request.user}}</span> </h1>
+	<style>
+	#upperthird>div>h1>span {
+		text-transform: capitalize;
+	}
+	</style>
+	<hr> {% csrf_token %} {% if not request.user.is_active %}
+	<div style="width: 100%; height:48px;"  id="unverified">
+		<div id="activate" style="  float:left; width: 66%;"> <span>Please activate if you want to change your settings - </span> <a href="" onclick="send_email();">Click here to send activation email</a> </div>
+		<div style="float:right; width: 33%;">
+			<button class="btn btn-danger" data-toggle="modal" data-target="#logoutModal" onclick="greyout()">Logout</button>
+			<button class="btn btn-primary" data-toggle="modal" data-target="#changeEmailModal" onclick="greyout()">Wrong email?</button>
+		</div>
+	</div> {% endif %}
+	<div class="container">
+	<style>
+		.myTextInputID::-webkit-input-placeholder {
+			color: transparent;
+			font-size: 23px;
+		}
+		
+		.myTextInputID::-moz-placeholder {
+			color: transparent;
+			font-size: 23px;
+		}
+		
+		.myTextInputID:-ms-input-placeholder {
+			color: transparent;
+			font-size: 23px;
+		}
+		
+		.myTextInputID::placeholder {
+			color: transparent;
+			font-size: 23px;
+		}
+		
+		.myTextInputID {
+			width: 100%;
+			border-radius: 5px;
+			height: 3em;
+			border-color: black;
+			margin: 0;
+		}
+		
+		.myTextInputID:hover {
+			background-color: #fcfcfc;
+		}
+		
+		.myTextInputID:hover::placeholder {
+			color: black;
+			font-size: 23px;
+		}
+		
+		#upperthird>div>h1>span::first-letter {
+			text-transform: uppercase;
+		}
+		
+		#phoneNumberCon {
+			height: 38px;
+		}
+		.md {
+			width: 600px;
+		}
+		
+		body {
+			margin-top: 20px;
+			color: #1a202c;
+			text-align: left;
+		}
+		
+		.main-body {
+			padding: 15px;
+		}
+		
+		.nav-link {
+			color: #4c925d;
+		}
+		
+		.card {
+			box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
+		}
+		
+		.card {
+			position: relative;
+			flex-direction: column;
+			min-width: 0;
+			word-wrap: break-word;
+			background-color: #fff;
+			background-clip: border-box;
+			border: 0 solid rgba(0, 0, 0, .125);
+			border-radius: .25rem;
+		}
+		
+		.row gutters-sm {
+			margin-top: -20px:
+		}
+		
+		.card-body {
+			flex: 1 1 auto;
+			min-height: 1px;
+			padding: 1rem;
+		}
+		
+		.gutters-sm {
+			margin-right: -8px;
+			margin-left: -8px;
+		}
+		
+		.gutters-sm>.col,
+		.gutters-sm>[class*=col-] {
+			padding-right: 8px;
+			padding-left: 8px;
+		}
+		
+		.mb-3,
+		.my-3 {
+			margin-bottom: 1rem !important;
+		}
+		
+		.bg-gray-300 {
+			background-color: #e2e8f0;
+		}
+		
+		.h-100 {
+			height: 100% !important;
+		}
+		
+		.shadow-none {
+			box-shadow: none !important;
+		}
+		
+		#upperthird>div>div.container>div>div.col-md-4.d-none.d-md-block>div>div>nav>a.nav-item.nav-link.has-icon.nav-link-faded.active {
+			background-color: #4c925d;
+		}
+		
+		#profile>form>button.btn.btn-primary {
+			background-color: #4c925d;
+		}
+		
+		#upperthird>div>div.container>div>div.col-md-4.d-none.d-md-block>div>div>nav>a:hover {
+			color: #0f0;
+		}
+		
+		.custom-control-label:before {
+			background-color: grey;
+		}
+		
+		.custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+			background-color: #4c925d;
+			;
+		}
+	</style>
+		<div class="row gutters-sm">
+			<div class="col-md-4 d-none d-md-block">
+				<div class="card">
+					<div class="card-body">
+						<nav class="nav flex-column nav-pills nav-gap-y-1">
+							<a href="#profile" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded active">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user mr-2">
+									<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+									<circle cx="12" cy="7" r="4"></circle>
+								</svg>Profile Information </a>
+							<a href="#security" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shield mr-2">
+									<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+								</svg>Security </a>
+						</nav>
+					</div>
+				</div>
+				<div class="cover" style="background: rgba(255, 255, 255, 0.6);" ;>
+					<div class="card" style="margin-top: 20px;">
+						<div class="card-body">
+							<nav class="nav flex-column nav-pills nav-gap-y-1">
+								<button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" onclick="greyout();">Delete Account</button>
+								<button class="btn btn-danger" data-toggle="modal" data-target="#logoutModal" onclick="greyout();" style="margin-top: 10px;">Logout</button>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="md">
+				<div class="cover" style="background: rgba(255, 255, 255, 0.6);">
+					<div class="card">
+						<div class="card-header border-bottom mb-3 d-flex d-md-none">
+							<ul class="nav nav-tabs card-header-tabs nav-gap-x-1" role="tablist">
+								<li class="nav-item">
+									<a href="#profile" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded active">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user mr-2">
+											<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+											<circle cx="12" cy="7" r="4"></circle>
+										</svg>
+									</a>
+								</li>
+								<li>
+									<a href="#security" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shield mr-2">
+											<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+										</svg>
+									</a>
+								</li>
+							</ul>
+						</div>
+						<div class="card-body tab-content">
+							<div class="tab-pane active" id="profile">
+								<h6>YOUR PROFILE INFORMATION </h6>
+								<hr>
+								<form method="POST" action=""> {% csrf_token %}
+									<!--<div class="form-group">
+										<label for="bio">Default Country</label>
+										<select name="country" class="form-control" id="id_country" >
+											<option id="USOption" value="US">United States of America</option>
+										  
+											<option id="UKOption" value="GB" >United Kingdom</option>
+										  
+										  </select>
+										<script>
+											if ("{{currentUser.country}}" == "GB") {
+												document.getElementById("UKOption").setAttribute("selected","selected")
+												
+											} else {
+											  	document.getElementById("USOption").setAttribute("selected","selected")
+											}
+										</script>
+									</div>
+								-->
+									<div class="form-group ">
+										<label for="username">Username </label> {{form.username}} {% if messages %} {% for message in messages %} {% if 'username' in message.extra_tags%}
+										<div class="alert alert-danger" role="alert">{{message}}</div>
+										 {% endif %} {% endfor %} {% endif %} <small id="usernameHelp" class="form-text text-muted"></small> </div>
+									<div class="form-group">
+										<label for="email">Email </label> {{form.email}} {% if messages %} {% for message in messages %} {% if 'email' in message.extra_tags%}
+										<div class="alert alert-danger" role="alert">{{message}}</div>
+										<style>
+										.alert {
+											margin-top: 5px;
+											padding: 0;
+											padding-top: 2px;
+											height: 30px;
+											text-align: center;
+										}
+										.form-group {
+											margin-bottom: 10px;
+										}
+										</style> {% endif %} {% endfor %} {% endif %} <small id="usernameHelp" class="form-text text-muted">If you change your email address you will be required to go the process of verrifying it again.</small> </div>
+									<!--<div class="form-group">
+										<label for="phonenumber">Mobile number</label>
+										<div id="phoneNumberCon">
+											{{form.phonenumber}} </div> <small id="usernameHelp" class="form-text text-muted">This is for price notifictaions only, leave blank if you do not wish to reveive these.</small> {% if messages %} {% for message in messages %} {% if 'success' in message.extra_tags %}
+										<div class="alert alert-success" role="alert">{{message}}</div>
+										<style>
+										.alert {
+											margin-top: 5px;
+											padding: 0;
+											padding-top: 2px;
+											height: 30px;
+											text-align: center;
+										}
+										</style> {% endif %} {% endfor %} {% endif %} </div>
+									-->
+										<input type="submit" id="Update Profile" value="Save changes" class="btn btn-primary">
+									<input type="reset" id="Reset Profile" value="Reset changes" class="btn btn-secondary"> </form>
+								<script>
+							
+								document.getElementsByName("username")[0].setAttribute("placeholder", "Username...")
+								document.getElementsByName("username")[0].setAttribute("value", "{{request.user}}")
+								document.getElementsByName("email")[0].setAttribute("placeholder", "Email...")
+								document.getElementsByName("email")[0].setAttribute("value", "{{request.user.email}}")
+								document.getElementById("phoneNumber").setAttribute("placeholder", " Mobile number...")	
+								//document.getElementById("phoneNumber").setAttribute("value", "{{currentUser.phonenumber}}")
+								
+								</script>
+							</div>
+							<div class="tab-pane" id="security">
+								<h6>SECURITY SETTINGS</h6>
+								<hr>
+								<form method="POST" action="javascript:void(0);"> {% csrf_token %}
+									<div class="form-group">
+										<label class="d-block">Change Password</label> {{resetPassword.oldPassword}}
+										<div style="display:none;" class="alert alert-danger" role="alert" id="wrongPassword">Wrong password.</div> {{resetPassword.passwordnew}} {{resetPassword.passwordnew1}}
+										<div style="display:none;" class="alert alert-danger" id="diffPasswords" role="alert">Passwords do not match.</div>
+									</div>
+									<input type="submit" id="changePassword" value="Change password" class="btn btn-primary">
+									<style>
+									.alert {
+										margin-top: 5px;
+										padding: 0;
+										padding-top: 2px;
+										height: 30px;
+										text-align: center;
+									}
+									</style>
+								</form>
+							</div>
+							<div class="alert alert-success" style="display:none;" id="success" role="alert">Password updated.</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLongTitle">Are you sure you want to logout?</h5> </div>
+					<div class="modal-footer">
+						<button type="button" class="btn " data-dismiss="modal">Close</button>
+						<a href="{%url 'logout' %}">
+							<button type="button" id="finalLogout" class="btn ">Logout</button>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLongTitle">Are you sure you want to delete your account?</h5> </div>
+					<div class="modal-body">
+						<p class="text-muted font-size-sm">Retype your usernmae to confirm. <span style="font-weight: 600;">{{request.user}}</span>.</p>
+						<input id="inputUsername" placeholder="{{request.user}}" class="form-control" style="padding:20px; margin-top:9px;"> </div>
+					<div class="modal-footer">
+						<button type="button" class="btn " data-dismiss="modal">Close</button>
+						<button type="button" id="finalLogout" onclick="inputUsername();" class="btn">Delete</button>
+						<script>
+						function inputUsername() {
+							if(document.getElementById("inputUsername").value == "{{request.user}}") {
+								window.location.href = "{ % url 'delete' % }"
+								
+								console.log("this")
+							} else {}
+						}
+						$("#changePassword").click(function() {
+							$.ajax({
+								url: "",
+								type: 'post',
+								data: {
+									csrfmiddlewaretoken: csrf,
+									name: "changePassword",
+									oldPassword: document.getElementById("id_oldPassword").value,
+									password1: document.getElementById("id_passwordnew").value,
+									password2: document.getElementById("id_passwordnew1").value,
+								},
+								success: function(response) {
+									responseType = (response.responseType)
+									if(responseType == "wrongPassword") {
+										document.getElementById("wrongPassword").style.display = "block"
+										setTimeout(function() {
+											document.getElementById("wrongPassword").style.display = "none"
+										}, 2000);
+									} else if(responseType == "diffPasswords") {
+										document.getElementById("diffPasswords").style.display = "block"
+										setTimeout(function() {
+											document.getElementById("diffPasswords").style.display = "none"
+										}, 2000);
+									} else {
+										document.getElementById("success").style.display = "block"
+										setTimeout(function() {
+											window.location.href = "{% url 'loginUser' %}"
+										}, 2000);
+									}
+								}
+							})
+						});
+						
+						</script>
+					
+          </div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="changeEmailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLongTitle">Change email</h5> </div>
+					<form method="POST" action=""> {% csrf_token %}
+						<div class="form-group" style="padding:20px;"> {{changeEmail.changeEmail}} </div>
+						<div class="modal-footer"> <small id="usernameHelp" class="form-text ">Once you press change you email will be changed and a verification email will be sent to the new email address.</small>
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							<input type="submit" class="btn btn-primary" value="Change"> </div>
+					</form>
+				</div>
+			</div>
+		</div> {% if not request.user.is_active %}
+		<script>
+		document.getElementsByClassName("card")[2].style.zIndex = "-1";
+		document.getElementsByClassName("card")[1].style.zIndex = "-1";
+		document.getElementsByName("changeEmail")[0].setAttribute("placeholder", "Email...")
+		</script> {% endif %} {%endblock%}
