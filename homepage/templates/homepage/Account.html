@@ -279,6 +279,7 @@
 									<div class="form-group">
 										<label class="d-block">Change Password</label> {{resetPassword.oldPassword}}
 										<div style="display:none;" class="alert alert-danger" role="alert" id="wrongPassword">Wrong password.</div> {{resetPassword.passwordnew}} {{resetPassword.passwordnew1}}
+										<div style="display:none;" class="alert alert-danger" id="samePassword" role="alert">New password cannot be the old password</div>
 										<div style="display:none;" class="alert alert-danger" id="diffPasswords" role="alert">Passwords do not match.</div>
 									</div>
 									<input type="submit" id="changePassword" value="Change password" class="btn btn-primary">
@@ -354,6 +355,11 @@
 										document.getElementById("diffPasswords").style.display = "block"
 										setTimeout(function() {
 											document.getElementById("diffPasswords").style.display = "none"
+										}, 2000);
+									} else if(responseType == "samePassword") {
+										document.getElementById("samePassword").style.display = "block"
+										setTimeout(function() {
+											document.getElementById("samePassword").style.display = "none"
 										}, 2000);
 									} else {
 										document.getElementById("success").style.display = "block"

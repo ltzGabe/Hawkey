@@ -5,10 +5,26 @@
     <title>Confirmation</title>
 </head>
 <body>
-{% if success %}
-    {{ user.username }}, your account is confirmed!
-{% else %}
-    Error, invalid token!
-{% endif %}
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+          <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card shadow">
+              <div class="card-title text-center border-bottom">
+                <h2 class="p-3">Account confirmed!</h2>
+              </div> 
+              <form method="POST" action="">
+              <div class="card-body">
+            {% if success %}
+                {{ user.username }}, your account is confirmed!
+            {% else %}
+                Error, invalid token!
+            {% endif %}
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
 </body>
 </html>

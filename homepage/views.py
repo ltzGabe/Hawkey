@@ -1,4 +1,5 @@
 import os
+from django.contrib.auth.hashers import check_password
 from homepage.models import Customer
 from homepage.models import Product as productModel
 from homepage.models import Tracker as trackerModel
@@ -32,6 +33,7 @@ headers = {
     "Connection"				: "close",
     "Upgrade-Insecure-Requests"	: "1",
 }
+
 # Amazon api values
 KEY = "AKIAIDTHQ4TOY2C5SD5A"
 SECRETKEY = "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"
@@ -50,10 +52,7 @@ for i in bucket.objects.all():
     client.download_file('productsdatafilevalues', i.key, 'static/homepage/Products Prices/' + str(i.key))
              
 
-def chooseClosingTab(count, currentUser, closingTab, currentTab):
-            
-            print("current",currentTab)
-            print("closing",closingTab)
+def chooseClosingTab(count, currentUser, closingTab, currentTab):        
             currentUser.tracker_set.all()[closingTab].delete()
             if closingTab == currentTab:
                 currentTab = currentTab - 1
@@ -62,20 +61,27 @@ def chooseClosingTab(count, currentUser, closingTab, currentTab):
                     currentTab = currentTab - 1
                 else:
                     currentTab = currentTab - 1
-            
-            
-            print(currentTab)
-
+            if closingTab == currentTab-1:
+                currentTab = currentTab-1
             return currentTab
 
-        
+# Function that takes a product object as an argument and opens the csv file 
+# with the same ASIN unique identier 
 def uploadFile(scrapedProduct):
     productFile = open("static/homepage/Products Prices/"+scrapedProduct.asin+".csv", "rb")
     bucket = "productsdatafilevalues"
     client.upload_fileobj(productFile,bucket, scrapedProduct.asin+".csv")
     productFile.close()        
         
+#file_list = os.listdir("static/homepage/Products Prices/")
 
+# Loop through the files
+#for file in file_list:
+#    bucket = "productsdatafilevalues"
+#    productFile = open("static/homepage/Products Prices/"+file, "rb")
+#    file_path = os.path.join("static/homepage/Products Prices/", file)
+#    if os.path.isfile(file_path):
+#        client.upload_fileobj(productFile,bucket, file)
 
 class Tracker(TemplateView):
     template_name = 'homepage/Tracker.html'
@@ -132,25 +138,28 @@ class Tracker(TemplateView):
             if form.is_valid():
                 dt = datetime.datetime.today()
                 text = form.cleaned_data["productURL"]
-                scrapedProduct = amazon.get_items(text)[0]
+           
+                #scrapedProduct = amazon.get_items(text)[0]
                 
                 exists = productModel.objects.filter(
                     productNAME=scrapedProduct.item_info.title.display_value.replace("/", "").replace("'", "")).count()
                 if exists == 1:
+                    return redirect("http://127.0.0.1:8000/products/"+str(currentTab)+"Sony WH-1000XM4 Noise Cancelling Wireless Headphones - 30 hours battery life - Over Ear style - Optimised for Alexa and the Google Assistant - with built-in mic for phone calls - Black")
+                if exists == 2:
                     productRRP = scrapedProduct.offers.listings[0].saving_basis.amount
                     if productRRP == None:
                         productRRP = scrapedProduct.offers.listings[0].price.amount
                     product = productModel.objects.get(
                         productNAME=scrapedProduct.item_info.title.display_value.replace("/", "").replace("'", ""))
                     product.productPRICE = scrapedProduct.offers.listings[0].price.amount
-                    #Because the used product price data changes what postion in the return statement is in, 
+                    # Because the used product price data changes what postion in the return statement is in, 
                     # an if statement is used to find the correct used or new data. and if there is no used
                     # product price available it is set to none.
                     if (scrapedProduct.offers.summaries[0].condition.value) == "Used":
                         product.offersUsedProductPRICE   = scrapedProduct.offers.summaries[0].lowest_price.amount
                         offersUsedProductPRICE= scrapedProduct.offers.summaries[0].lowest_price.amount
                         try:
-                            product.offersNewProductPRICE    = scrapedProduct.offers.summaries[1].lowest_price.amount
+                            product.offersNewProductPRICE = scrapedProduct.offers.summaries[1].lowest_price.amount
                             offersNewProductPRICE = scrapedProduct.offers.summaries[1].lowest_price.amount
                         except:
                             offersNewProductPRICE = None
@@ -427,7 +436,7 @@ class Product(TemplateView):
             
             productFile.close()
 
-            
+        
         
         total = 0.00
         NEWaveragePrice = 0.00
@@ -435,7 +444,6 @@ class Product(TemplateView):
         
     #AMAZON DATA FOR NEW PRODSUCTS
         priceAndAsinSorted = sorted(priceAndAsin, key=lambda x:x[1], reverse=True)
-        print(priceAndAsinSorted)
         for i in range(len(priceAndAsinSorted)):
             total = total + priceAndAsinSorted[i][1]
         try:
@@ -607,7 +615,7 @@ class Product(TemplateView):
                 scrapedProduct = amazon.get_items(text)[0]
                 
                 exists = productModel.objects.filter(
-                    productNAME=scrapedProduct.item_info.title.display_value.replace("/", "").replace("'", "")).count()
+                    productNAME=scrapedProduct.info.title.display_value.replace("/", "").replace("'", "")).count()
                 if exists == 1:      
                     productRRP = scrapedProduct.offers.listings[0].saving_basis.amount
                     if productRRP == None:
@@ -615,7 +623,7 @@ class Product(TemplateView):
                     product = productModel.objects.get(
                         productNAME=scrapedProduct.item_info.title.display_value.replace("/", "").replace("'", ""))
                     product.productPRICE = scrapedProduct.offers.listings[0].price.amount
-                    #Because the used product price data changes what postion in the return statement is in, 
+                    # Because the used product price data changes what postion in the return statement is in, 
                     # an if statement is used to find the correct used or new data. and if there is no used
                     # product price available it is set to none.    
                     if (scrapedProduct.offers.summaries[0].condition.value) == "Used":
@@ -904,17 +912,21 @@ class Account(TemplateView):
                 oldPassword =   request.POST.get("oldPassword")
                 password1   =   request.POST.get("password1")
                 password2   =   request.POST.get("password2")
-                
                 user = authenticate(request, username=request.user.username, password=oldPassword)
                 if user == None:
                     return JsonResponse({"responseType": "wrongPassword"})
                 else:
                     if password1 != password2:
                         return JsonResponse({"responseType": "diffPasswords"})
+                    elif password1 =="" or password2=="": 
+                        exit()
                     else:
-                        user.set_password(password1)
-                        user.save()
-                        return JsonResponse({"responseType": "success"})
+                        if check_password(password1, request.user.password) == True:
+                            return JsonResponse({"responseType": "samePassword"})
+                        else: 
+                            user.set_password(password1)
+                            user.save()
+                            return JsonResponse({"responseType": "success"})
         if form.is_valid():
             #getting data from form to check if their account details can be changed
             email = form.cleaned_data.get("email")
@@ -958,7 +970,6 @@ class Account(TemplateView):
             email = changeEmail.cleaned_data.get("changeEmail")
             user = request.user
             user.email = email
-            print(email)
             send_email(user)
         
 
@@ -986,7 +997,7 @@ def register(request):
 
             return render(request, template_name, args)
 
-    elif request.method == 'POST':
+    elif request.method == 'POST': 
         signUpForm = CreateUserForm(request.POST)
         if signUpForm.is_valid():
             username = signUpForm.cleaned_data.get("username")
@@ -995,7 +1006,6 @@ def register(request):
             user = User.objects.create_user(
                 username=username, password=password, email=email)
             user.is_active = False
-
             login(request, user)
             send_email(user)
             newCustomer = Customer(
@@ -1049,3 +1059,14 @@ def deleteUser(request):
     return redirect('Tracker')
 
 
+class password_reset_confirm(TemplateView):
+    template_name = 'homepage/password_reset_page.html'
+
+    def get(self, request):
+        print("this is happening")
+        resetPassword = changePassword()
+        args = {"resetPassword": resetPassword}
+        return render(request, self.template_name, args)
+    def post(self, request):
+
+        return render(request, 'homepage/password_reset_confirm.html')

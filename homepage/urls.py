@@ -19,8 +19,8 @@ urlpatterns = [
     path('delete/', views.deleteUser, name="delete"),
     path('email/', include(email_urls)),	
     path('reset/', auth_views.PasswordResetView.as_view(template_name="homepage/password_reset.html"), name='password_reset', ),
-    path('reset_sent/', auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),
-    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name="password_reset_confirm"),
-    path('reset_complete/', auth_views.PasswordResetCompleteView.as_view(), name = "password_reset_complete"),
+    path('reset_sent/', auth_views.PasswordResetDoneView.as_view(template_name="homepage/password_reset_confirmed.html"), name="password_reset_done"),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="homepage/password_reset_page.html"), name="password_reset_confirm"),
+    path('reset_complete/', auth_views.PasswordResetCompleteView.as_view(template_name="homepage/password_reset_confirmation.html"), name = "password_reset_complete"),
     
 ]
