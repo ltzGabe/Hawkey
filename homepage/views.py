@@ -138,8 +138,8 @@ class Tracker(TemplateView):
             if form.is_valid():
                 dt = datetime.datetime.today()
                 text = form.cleaned_data["productURL"]
-           
-                #scrapedProduct = amazon.get_items(text)[0]
+                print(exists)
+                scrapedProduct = amazon.get_items(text)[0]
                 
                 exists = productModel.objects.filter(
                     productNAME=scrapedProduct.item_info.title.display_value.replace("/", "").replace("'", "")).count()
