@@ -4,8 +4,8 @@ from homepage.models import Product as productModel
 def storeProductPrice():
     allProducts = productModel.objects.all()
     import datetime
-    KEY = "AKIAIDTHQ4TOY2C5SD5A"
-    SECRETKEY = "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"
+    KEY = ""
+    SECRETKEY = ""
     TAG = "hawkeyo-21"
     COUNTRY = "UK"
     from amazon.paapi import AmazonAPI
